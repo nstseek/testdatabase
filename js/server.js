@@ -1,13 +1,12 @@
-import * as express from "express";
-import * as cors from "cors";
-import * as bodyParser from "body-parser";
-import * as knex from "knex";
-
-const port = 7000;
-
-const server = express();
-
-const knexSQL = knex({
+"use strict";
+exports.__esModule = true;
+var express = require("express");
+var cors = require("cors");
+var bodyParser = require("body-parser");
+var knex = require("knex");
+var port = 7000;
+var server = express();
+var knexSQL = knex({
     client: 'oracledb',
     connection: {
         host: '127.0.0.1',
@@ -17,16 +16,14 @@ const knexSQL = knex({
         database: 'test'
     }
 });
-
 console.log('response: ');
 console.log(knexSQL.select().from('messages'));
 console.log(knexSQL.select().table('messages'));
-
 server.use(cors());
-
 server.use(bodyParser.json({ limit: "10mb" }));
-
-server.listen(port, err => {
-  if (err) console.log(err);
-  else console.log(`server listening on port ${port}`);
+server.listen(port, function (err) {
+    if (err)
+        console.log(err);
+    else
+        console.log("server listening on port " + port);
 });
