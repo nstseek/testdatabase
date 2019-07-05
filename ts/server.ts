@@ -11,20 +11,25 @@ const knexSQL = knex({
     client: 'oracledb',
     connection: {
         host: '127.0.0.1',
-        port: 1527,
         user: 'nstseek',
         password: process.argv[2],
-        database: 'test'
+        database: 'XE',
     }
 });
 
+console.log(process.argv[2]);
 console.log('response: ');
-console.log(knexSQL.select().from('messages'));
-console.log(knexSQL.select().table('messages'));
+
+async function logging() {
+  const query = await knexSQL.select('*').from('MESSAGES');
+  console.log(query);
+}
 
 server.use(cors());
 
 server.use(bodyParser.json({ limit: "10mb" }));
+
+logging();
 
 server.listen(port, err => {
   if (err) console.log(err);
